@@ -1,132 +1,68 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br />
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
-        >vue-cli documentation</a
-      >.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
-          target="_blank"
-          rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router"
-          target="_blank"
-          rel="noopener"
-          >router</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript"
-          target="_blank"
-          rel="noopener"
-          >typescript</a
-        >
-      </li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li>
-        <a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a>
-      </li>
-      <li>
-        <a href="https://forum.vuejs.org" target="_blank" rel="noopener"
-          >Forum</a
-        >
-      </li>
-      <li>
-        <a href="https://chat.vuejs.org" target="_blank" rel="noopener"
-          >Community Chat</a
-        >
-      </li>
-      <li>
-        <a href="https://twitter.com/vuejs" target="_blank" rel="noopener"
-          >Twitter</a
-        >
-      </li>
-      <li>
-        <a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a>
-      </li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li>
-        <a href="https://router.vuejs.org" target="_blank" rel="noopener"
-          >vue-router</a
-        >
-      </li>
-      <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a>
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-devtools#vue-devtools"
-          target="_blank"
-          rel="noopener"
-          >vue-devtools</a
-        >
-      </li>
-      <li>
-        <a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener"
-          >vue-loader</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/awesome-vue"
-          target="_blank"
-          rel="noopener"
-          >awesome-vue</a
-        >
-      </li>
-    </ul>
+  <h1 @click="fn">
+    {{ v1 }}
+  </h1>
+
+  <div>
+    <label for="username">姓名</label>
+    <input id="username" type="text" placeholder="姓名" v-model="v2.username" />
   </div>
+  <div>
+    <label for="phonenumber">手机号</label>
+    <input
+      type="tel"
+      id="phonenumber"
+      placeholder="手机号"
+      v-model="v2.phonenumber"
+    />
+  </div>
+  <button @click="echoUserInfo">echoUserInfo</button>
 </template>
-
 <script lang="ts">
-import { defineComponent } from "vue";
-
+// template不需要根节点了
+// 使用ref定义的数据  在js中需要value属性获取其值，在模板中不需要（template编译帮我们处理过了）
+// ref可以定义简单类型、复杂类型的响应式数据
+// setup返回值的两种情况
+// 1.返回值为数据：数据就为tremplate提供的数据源
+// 2.返回值为  返回jsx元素的函数： 该函数就直接充当render函数
+import { defineComponent, reactive, ref } from "vue";
+// function $ref<T>(data: T) {
+//   return reactive({ value: data });
+// }
+//ref是一种特殊的reactive
 export default defineComponent({
-  name: "HelloWorld",
-  props: {
-    msg: String,
+  setup() {
+    function feat1() {
+      let v1 = ref(1);
+      function fn() {
+        console.log(v1.value++);
+      }
+      return [v1, fn] as const;
+    }
+    let [v1, fn] = feat1();
+    const v2 = reactive<{
+      username: string;
+      phonenumber: string;
+    }>({
+      username: "",
+      phonenumber: "",
+    });
+    function echoUserInfo() {
+      console.log(v2);
+    }
+    return { v1, v2, fn, echoUserInfo };
   },
+  //data
+  // methods
+  // computed
+  // watch
+  // props
+  // modal
+  // render
+  // template
+  // components
+  // filters
+  // directives
+  // created
 });
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
