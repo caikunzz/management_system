@@ -16,7 +16,10 @@
       v-model="v2.phonenumber"
     />
   </div>
-  <button @click="echoUserInfo">echoUserInfo</button>
+  <button class="text-red-500 p-[20px] bg-blue-300" @click="echoUserInfo">
+    echoUserInfo
+  </button>
+  <a-switch v-model:checked="checked" />
 </template>
 <script lang="ts">
 // template不需要根节点了
@@ -26,12 +29,14 @@
 // 1.返回值为数据：数据就为tremplate提供的数据源
 // 2.返回值为  返回jsx元素的函数： 该函数就直接充当render函数
 import { defineComponent, reactive, ref } from "vue";
+import axios from "axios";
 // function $ref<T>(data: T) {
 //   return reactive({ value: data });
 // }
 //ref是一种特殊的reactive
 export default defineComponent({
   setup() {
+    const checked = ref(true);
     function feat1() {
       let v1 = ref(1);
       function fn() {
@@ -50,7 +55,13 @@ export default defineComponent({
     function echoUserInfo() {
       console.log(v2);
     }
-    return { v1, v2, fn, echoUserInfo };
+    axios
+      .get(
+        "https://netease-cloud-music-api-five-roan-88.vercel.app/topic/detail/event/hot?actid=111551188"
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    return { v1, v2, fn, echoUserInfo, checked };
   },
   //data
   // methods
