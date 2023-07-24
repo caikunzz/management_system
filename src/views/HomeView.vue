@@ -1,13 +1,10 @@
 <template>
   <div>
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <img alt="Vue logo" src="../assets/logo.png" @click="a++" />
+    {{ a }}
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "HomeView",
-  components: {},
-});
+<script lang="ts" setup>
+const a = ref(1);
 </script>
