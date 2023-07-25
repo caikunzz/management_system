@@ -7,6 +7,10 @@ const routes: RouteRecordRaw[] = [
     name: "home",
     component: HomeView,
   },
+  {
+    path: "/antdesign",
+    component: () => import("@/views/AntDesign.vue"),
+  },
 ];
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
