@@ -21,7 +21,9 @@
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "lodash": "^4.17.21",
+    "unplugin-vue-components": "^0.25.1",
     "vue": "^3.2.13",
+    "vue-request": "^2.0.3",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {
